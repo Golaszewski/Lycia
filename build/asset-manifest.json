@@ -1,0 +1,18 @@
+{
+  "app.css": "/static/css/app.css",
+  "app.js": "/static/js/app.js",
+  "app.css.map": "/static/css/app.css.map",
+  "app.js.map": "/static/js/app.js.map",
+  "content.css": "/static/css/content.css",
+  "content.js": "/static/js/content.js",
+  "content.css.map": "/static/css/content.css.map",
+  "content.js.map": "/static/js/content.js.map",
+  "main.css": "/static/css/main.css",
+  "main.js": "/static/js/main.js",
+  "main.css.map": "/static/css/main.css.map",
+  "main.js.map": "/static/js/main.js.map",
+  "pdf.worker.js": "/static/js/pdf.worker.js",
+  "pdf.worker.js.map": "/static/js/pdf.worker.js.map",
+  "index.html": "/index.html",
+  "static/media/logo.svg": "/static/media/logo.svg"
+}
