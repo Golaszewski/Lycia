@@ -1,0 +1,23 @@
+{
+  "short_name": "My Extension",
+  "name": "My Extension",
+  "version": "1.1",
+  "permissions": ["activeTab","declarativeContent","storage","contextMenus","tabs","<all_urls>"],
+  "manifest_version": 2,
+  "background": {
+    "page":"background.html"
+  },
+  "browser_action": {},
+  "content_scripts" : [
+    {
+      "matches": [ "<all_urls>" ],
+      "css": ["/css/root.css"],
+      "js": ["/static/js/content.js"]
+    }
+  ],
+  "web_accessible_resources":[
+    "/static/css/content.css", "/static/media/*","/images/Jcrop.gif",
+    "/images/pixel.png","/static/js/pdf.worker.js"
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk=' https://ajax.googleapis.com https://unpkg.com; object-src 'self'"
+}
