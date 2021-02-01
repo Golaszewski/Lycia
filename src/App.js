@@ -50,6 +50,58 @@ class ScreenshotButton extends React.Component {
   }
 }
 
+class SetStorage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: []
+    };
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    chrome.storage.sync.set({ alldata: this.props.categories })
+    console.log(chrome.storage.sync.get(['alldata'],function(result){
+      console.log(result)
+    }))
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}> Store Data </button>
+    )
+  }
+}
+
+class GetStorage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      result: null
+    };
+    this.getStore=this.getStore.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  getStore(result){
+    this.props.GetStorage(result)
+  }
+
+  handleClick() {
+    chrome.storage.sync.get('alldata', (result)=>
+      this.getStore(result.alldata)
+      //console.log(result)
+    )
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}> Get Data </button>
+    )
+  }
+}
+
 var bibliography = []
 
 class NameForm extends React.Component {
@@ -100,12 +152,6 @@ class TextArea extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    /* var element={
-      data:this.state.value,
-      id: getRandomInt(0, 1000000000),
-      link:'',
-      type:'note'
-    } */
     this.props.submit(this.state.value)
   }
 
@@ -309,6 +355,7 @@ class Categories extends React.Component {
     this.clickBack = this.clickBack.bind(this)
     this.clickForward = this.clickForward.bind(this)
     this.AddSummary = this.AddSummary.bind(this)
+    this.GetStorageData=this.GetStorageData.bind(this)
   }
 
 
@@ -392,6 +439,12 @@ class Categories extends React.Component {
     this.setState({
 
     })
+  }
+
+  GetStorageData(categories){
+    console.log("fired get")
+    this.setState({contains:categories})
+    console.log(this.state.contains)
   }
 
   clickBack() {
@@ -500,6 +553,8 @@ class Categories extends React.Component {
         <TextArea submit={this.AddElToCategory} label="Add element" />
         <div id="subtitle"><b>Screenshots</b></div>
         <ImageList imagelist={imagelist} />
+        <SetStorage categories={this.state.contains}/>
+        <GetStorage GetStorage={this.GetStorageData}/>
       </div>
     )
   }

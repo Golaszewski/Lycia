@@ -2253,6 +2253,20 @@ plugins_add(ref, {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _assertThisInitialized; });
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2279,20 +2293,6 @@ var _input = _interopRequireDefault(__webpack_require__(78));
 var _output = _interopRequireDefault(__webpack_require__(79));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _assertThisInitialized; });
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
 
 /***/ }),
 /* 4 */
@@ -2360,41 +2360,6 @@ if (typeof console.Console === 'function') {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-module.exports = {
-  // Ex: keep only 'fr' in 'fr_FR'
-  shortLang: language => language.toLowerCase().split('_')[0],
-
-  // a polymorphism helper:
-  // accept either a string or an array and return an array
-  forceArray: array => {
-    if (typeof array === 'string') array = [ array ]
-    return array || []
-  },
-
-  // simplistic implementation to filter-out arrays
-  isPlainObject: obj => {
-    if (!obj || typeof obj !== 'object' || obj instanceof Array) return false
-    return true
-  },
-
-  // encodeURIComponent ignores !, ', (, ), and *
-  // cf https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Description
-  fixedEncodeURIComponent: str => {
-    return encodeURIComponent(str).replace(/[!'()*]/g, encodeCharacter)
-  },
-
-  replaceSpaceByUnderscores: str => str.replace(/\s/g, '_'),
-
-  uniq: array => Array.from(new Set(array))
-}
-
-const encodeCharacter = char => '%' + char.charCodeAt(0).toString(16)
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2406,7 +2371,7 @@ function _classCallCheck(instance, Constructor) {
 }
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2428,7 +2393,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2473,7 +2438,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(2);
 
 // CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
 
@@ -2506,7 +2471,7 @@ function _createSuper(Derived) {
 }
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2539,6 +2504,41 @@ function _inherits(subClass, superClass) {
   });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = {
+  // Ex: keep only 'fr' in 'fr_FR'
+  shortLang: language => language.toLowerCase().split('_')[0],
+
+  // a polymorphism helper:
+  // accept either a string or an array and return an array
+  forceArray: array => {
+    if (typeof array === 'string') array = [ array ]
+    return array || []
+  },
+
+  // simplistic implementation to filter-out arrays
+  isPlainObject: obj => {
+    if (!obj || typeof obj !== 'object' || obj instanceof Array) return false
+    return true
+  },
+
+  // encodeURIComponent ignores !, ', (, ), and *
+  // cf https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Description
+  fixedEncodeURIComponent: str => {
+    return encodeURIComponent(str).replace(/[!'()*]/g, encodeCharacter)
+  },
+
+  replaceSpaceByUnderscores: str => str.replace(/\s/g, '_'),
+
+  uniq: array => Array.from(new Set(array))
+}
+
+const encodeCharacter = char => '%' + char.charCodeAt(0).toString(16)
+
 
 /***/ }),
 /* 11 */
@@ -28282,7 +28282,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 const { parse: parseClaim } = __webpack_require__(81)
-const { uniq } = __webpack_require__(6)
+const { uniq } = __webpack_require__(10)
 const { truthyPropertyClaims } = __webpack_require__(39)
 
 // Expects an entity 'claims' object
@@ -28531,7 +28531,7 @@ var _label = _interopRequireDefault(__webpack_require__(49));
 
 var _name = __webpack_require__(4);
 
-var _date = __webpack_require__(2);
+var _date = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31304,7 +31304,7 @@ module.exports = { truthyClaims, truthyPropertyClaims }
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { fixedEncodeURIComponent, replaceSpaceByUnderscores, isPlainObject } = __webpack_require__(6)
+const { fixedEncodeURIComponent, replaceSpaceByUnderscores, isPlainObject } = __webpack_require__(10)
 const { isPropertyId } = __webpack_require__(12)
 const wikidataBase = 'https://www.wikidata.org/wiki/'
 const languages = __webpack_require__(86)
@@ -31420,7 +31420,7 @@ module.exports = { getSitelinkUrl, getSitelinkData, isSitelinkKey }
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { isPlainObject, forceArray, shortLang } = __webpack_require__(6)
+const { isPlainObject, forceArray, shortLang } = __webpack_require__(10)
 const validate = __webpack_require__(19)
 
 module.exports = buildUrl => (ids, languages, props, format, redirects) => {
@@ -31473,7 +31473,7 @@ module.exports = buildUrl => (ids, languages, props, format, redirects) => {
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { fixedEncodeURIComponent } = __webpack_require__(6)
+const { fixedEncodeURIComponent } = __webpack_require__(10)
 
 module.exports = sparqlEndpoint => sparql => {
   const query = fixedEncodeURIComponent(sparql)
@@ -31497,7 +31497,7 @@ var _core = __webpack_require__(1);
 
 var _name = __webpack_require__(4);
 
-var _date = __webpack_require__(2);
+var _date = __webpack_require__(3);
 
 const months = [/jan(uary)?\.?/i, /feb(ruary)?\.?/i, /mar(ch)?\.?/i, /apr(il)?\.?/i, /may\.?/i, /jun(e)?\.?/i, /jul(y)?\.?/i, /aug(ust)?\.?/i, /sep(tember)?\.?/i, /oct(ober)?\.?/i, /nov(ember)?\.?/i, /dec(ember)?\.?/i];
 
@@ -32841,7 +32841,7 @@ async function response_parseAsync(entities) {
 var lib = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/date/lib/index.js
-var date_lib = __webpack_require__(2);
+var date_lib = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/plugin-wikidata/lib-mjs/types.json
 var types = __webpack_require__(34);
@@ -33360,7 +33360,7 @@ __webpack_require__.d(json_namespaceObject, "quickscrapeRecord", function() { re
 __webpack_require__.d(json_namespaceObject, "record", function() { return parseBibJson; });
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/date/lib/index.js
-var lib = __webpack_require__(2);
+var lib = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/name/lib/index.js
 var name_lib = __webpack_require__(4);
@@ -33648,19 +33648,19 @@ module.exports = JSON.parse("[{\"source\":[\"T1\",\"BT\"],\"target\":\"title\",\
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ App_Category; });
 
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var classCallCheck = __webpack_require__(7);
+var classCallCheck = __webpack_require__(6);
 
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js
-var createClass = __webpack_require__(8);
+var createClass = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(3);
+var assertThisInitialized = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js + 1 modules
-var inherits = __webpack_require__(10);
+var inherits = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createSuper.js + 4 modules
-var createSuper = __webpack_require__(9);
+var createSuper = __webpack_require__(8);
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(0);
@@ -33701,12 +33701,8 @@ var react_dom = __webpack_require__(26);
 var Cite=__webpack_require__(71);//var pdfjsLib = window['pdfjs-dist/build/pdf']
 var pdfjsLib=__webpack_require__(131);//const pdfjs = require("pdfjs-dist");
 pdfjsLib.GlobalWorkerOptions.workerSrc="chrome-extension://kelmmpoinikplamgchdcookmeeaehkbl/static/js/pdf.worker.js";console.log(pdfjsLib.GlobalWorkerOptions);function getRandomInt(min,max){min=Math.ceil(min);max=Math.floor(max);return Math.floor(Math.random()*(max-min)+min);//The maximum is exclusive and the minimum is inclusive
-}var App_ScreenshotButton=/*#__PURE__*/function(_React$Component){Object(inherits["a" /* default */])(ScreenshotButton,_React$Component);var _super=Object(createSuper["a" /* default */])(ScreenshotButton);function ScreenshotButton(props){var _this;Object(classCallCheck["a" /* default */])(this,ScreenshotButton);_this=_super.call(this,props);_this.state={value:[]};_this.handleClick=_this.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this));return _this;}Object(createClass["a" /* default */])(ScreenshotButton,[{key:"handleClick",value:function handleClick(){chrome.runtime.sendMessage({message:'inject'});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("button",{onClick:this.handleClick}," Take a screenshot");}}]);return ScreenshotButton;}(react_default.a.Component);var bibliography=[];var App_NameForm=/*#__PURE__*/function(_React$Component2){Object(inherits["a" /* default */])(NameForm,_React$Component2);var _super2=Object(createSuper["a" /* default */])(NameForm);function NameForm(props){var _this2;Object(classCallCheck["a" /* default */])(this,NameForm);_this2=_super2.call(this,props);_this2.state={value:''};_this2.handleChange=_this2.handleChange.bind(Object(assertThisInitialized["a" /* default */])(_this2));_this2.handleSubmit=_this2.handleSubmit.bind(Object(assertThisInitialized["a" /* default */])(_this2));return _this2;}Object(createClass["a" /* default */])(NameForm,[{key:"handleChange",value:function handleChange(event){this.setState({value:event.target.value});}},{key:"handleSubmit",value:function handleSubmit(event){this.props.submit(this.state.value);event.preventDefault();}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("form",{onSubmit:this.handleSubmit},/*#__PURE__*/react_default.a.createElement("label",null,/*#__PURE__*/react_default.a.createElement("input",{type:"text",value:this.state.value,onChange:this.handleChange})),/*#__PURE__*/react_default.a.createElement("input",{type:"submit",value:this.props.title}));}}]);return NameForm;}(react_default.a.Component);var App_TextArea=/*#__PURE__*/function(_React$Component3){Object(inherits["a" /* default */])(TextArea,_React$Component3);var _super3=Object(createSuper["a" /* default */])(TextArea);function TextArea(props){var _this3;Object(classCallCheck["a" /* default */])(this,TextArea);_this3=_super3.call(this,props);_this3.state={value:''};_this3.handleChange=_this3.handleChange.bind(Object(assertThisInitialized["a" /* default */])(_this3));_this3.handleSubmit=_this3.handleSubmit.bind(Object(assertThisInitialized["a" /* default */])(_this3));return _this3;}Object(createClass["a" /* default */])(TextArea,[{key:"handleChange",value:function handleChange(event){this.setState({value:event.target.value});}},{key:"handleSubmit",value:function handleSubmit(event){event.preventDefault();/* var element={
-      data:this.state.value,
-      id: getRandomInt(0, 1000000000),
-      link:'',
-      type:'note'
-    } */this.props.submit(this.state.value);}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("form",{onSubmit:this.handleSubmit},/*#__PURE__*/react_default.a.createElement("label",null,/*#__PURE__*/react_default.a.createElement("textarea",{value:this.state.value,onChange:this.handleChange})),/*#__PURE__*/react_default.a.createElement("input",{type:"submit",value:this.props.label}));}}]);return TextArea;}(react_default.a.Component);var store=[];var App_NoteList=/*#__PURE__*/function(_React$Component4){Object(inherits["a" /* default */])(NoteList,_React$Component4);var _super4=Object(createSuper["a" /* default */])(NoteList);function NoteList(props){Object(classCallCheck["a" /* default */])(this,NoteList);return _super4.call(this,props);}Object(createClass["a" /* default */])(NoteList,[{key:"render",/* handleAddCategory(event) {
+}var App_ScreenshotButton=/*#__PURE__*/function(_React$Component){Object(inherits["a" /* default */])(ScreenshotButton,_React$Component);var _super=Object(createSuper["a" /* default */])(ScreenshotButton);function ScreenshotButton(props){var _this;Object(classCallCheck["a" /* default */])(this,ScreenshotButton);_this=_super.call(this,props);_this.state={value:[]};_this.handleClick=_this.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this));return _this;}Object(createClass["a" /* default */])(ScreenshotButton,[{key:"handleClick",value:function handleClick(){chrome.runtime.sendMessage({message:'inject'});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("button",{onClick:this.handleClick}," Take a screenshot");}}]);return ScreenshotButton;}(react_default.a.Component);var App_SetStorage=/*#__PURE__*/function(_React$Component2){Object(inherits["a" /* default */])(SetStorage,_React$Component2);var _super2=Object(createSuper["a" /* default */])(SetStorage);function SetStorage(props){var _this2;Object(classCallCheck["a" /* default */])(this,SetStorage);_this2=_super2.call(this,props);_this2.state={value:[]};_this2.handleClick=_this2.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this2));return _this2;}Object(createClass["a" /* default */])(SetStorage,[{key:"handleClick",value:function handleClick(){chrome.storage.sync.set({alldata:this.props.categories});console.log(chrome.storage.sync.get(['alldata'],function(result){console.log(result);}));}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("button",{onClick:this.handleClick}," Store Data ");}}]);return SetStorage;}(react_default.a.Component);var App_GetStorage=/*#__PURE__*/function(_React$Component3){Object(inherits["a" /* default */])(GetStorage,_React$Component3);var _super3=Object(createSuper["a" /* default */])(GetStorage);function GetStorage(props){var _this3;Object(classCallCheck["a" /* default */])(this,GetStorage);_this3=_super3.call(this,props);_this3.state={result:null};_this3.getStore=_this3.getStore.bind(Object(assertThisInitialized["a" /* default */])(_this3));_this3.handleClick=_this3.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this3));return _this3;}Object(createClass["a" /* default */])(GetStorage,[{key:"getStore",value:function getStore(result){this.props.GetStorage(result);}},{key:"handleClick",value:function handleClick(){var _this4=this;chrome.storage.sync.get('alldata',function(result){return _this4.getStore(result.alldata);}//console.log(result)
+);}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("button",{onClick:this.handleClick}," Get Data ");}}]);return GetStorage;}(react_default.a.Component);var bibliography=[];var App_NameForm=/*#__PURE__*/function(_React$Component4){Object(inherits["a" /* default */])(NameForm,_React$Component4);var _super4=Object(createSuper["a" /* default */])(NameForm);function NameForm(props){var _this5;Object(classCallCheck["a" /* default */])(this,NameForm);_this5=_super4.call(this,props);_this5.state={value:''};_this5.handleChange=_this5.handleChange.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.handleSubmit=_this5.handleSubmit.bind(Object(assertThisInitialized["a" /* default */])(_this5));return _this5;}Object(createClass["a" /* default */])(NameForm,[{key:"handleChange",value:function handleChange(event){this.setState({value:event.target.value});}},{key:"handleSubmit",value:function handleSubmit(event){this.props.submit(this.state.value);event.preventDefault();}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("form",{onSubmit:this.handleSubmit},/*#__PURE__*/react_default.a.createElement("label",null,/*#__PURE__*/react_default.a.createElement("input",{type:"text",value:this.state.value,onChange:this.handleChange})),/*#__PURE__*/react_default.a.createElement("input",{type:"submit",value:this.props.title}));}}]);return NameForm;}(react_default.a.Component);var App_TextArea=/*#__PURE__*/function(_React$Component5){Object(inherits["a" /* default */])(TextArea,_React$Component5);var _super5=Object(createSuper["a" /* default */])(TextArea);function TextArea(props){var _this6;Object(classCallCheck["a" /* default */])(this,TextArea);_this6=_super5.call(this,props);_this6.state={value:''};_this6.handleChange=_this6.handleChange.bind(Object(assertThisInitialized["a" /* default */])(_this6));_this6.handleSubmit=_this6.handleSubmit.bind(Object(assertThisInitialized["a" /* default */])(_this6));return _this6;}Object(createClass["a" /* default */])(TextArea,[{key:"handleChange",value:function handleChange(event){this.setState({value:event.target.value});}},{key:"handleSubmit",value:function handleSubmit(event){event.preventDefault();this.props.submit(this.state.value);}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("form",{onSubmit:this.handleSubmit},/*#__PURE__*/react_default.a.createElement("label",null,/*#__PURE__*/react_default.a.createElement("textarea",{value:this.state.value,onChange:this.handleChange})),/*#__PURE__*/react_default.a.createElement("input",{type:"submit",value:this.props.label}));}}]);return TextArea;}(react_default.a.Component);var store=[];var App_NoteList=/*#__PURE__*/function(_React$Component6){Object(inherits["a" /* default */])(NoteList,_React$Component6);var _super6=Object(createSuper["a" /* default */])(NoteList);function NoteList(props){Object(classCallCheck["a" /* default */])(this,NoteList);return _super6.call(this,props);}Object(createClass["a" /* default */])(NoteList,[{key:"render",/* handleAddCategory(event) {
     store.dispatch(addCategory(event.target.value));
   } */ /*   componentDidMount() {
       chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -33770,9 +33766,9 @@ pdfjsLib.GlobalWorkerOptions.workerSrc="chrome-extension://kelmmpoinikplamgchdco
           });
         }
       });
-    } */value:function render(){var _this4=this;console.log("notelist");console.log(this.props.handler);//console.log("reading notelist")
+    } */value:function render(){var _this7=this;console.log("notelist");console.log(this.props.handler);//console.log("reading notelist")
 //console.log(this.props.notelist)
-return this.props.notelist.map(function(item){return/*#__PURE__*/react_default.a.createElement(Note_Note,{text:item.data,link:item.link,id:item.id,handler:_this4.props.handler});}/* this.state.value.map((item) =>
+return this.props.notelist.map(function(item){return/*#__PURE__*/react_default.a.createElement(Note_Note,{text:item.data,link:item.link,id:item.id,handler:_this7.props.handler});}/* this.state.value.map((item) =>
           <Note text={item.data} link={item.link} id={item.id} /> */);}}]);return NoteList;}(react_default.a.Component);//NotesList = connect(mapStateToProps)(NotesList)
 var ItemTypes={NOTE:'note'};/* const initialState = {
   categories:{}
@@ -33830,17 +33826,17 @@ function NoteReduce(state = initialState, action) {
 
   export const mapStateToProps = state => ({
     state
-  }) */var App_Categories=/*#__PURE__*/function(_React$Component5){Object(inherits["a" /* default */])(Categories,_React$Component5);var _super5=Object(createSuper["a" /* default */])(Categories);function Categories(props){var _this5;Object(classCallCheck["a" /* default */])(this,Categories);_this5=_super5.call(this,props);_this5.state={category:null,contains:{},history:[],historyindex:0};_this5.DefineNewCategory=_this5.DefineNewCategory.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.AddElToCategory=_this5.AddElToCategory.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.AddCategoryToCategory=_this5.AddCategoryToCategory.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.CategoryHandler=_this5.CategoryHandler.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.SetNull=_this5.SetNull.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.clickBack=_this5.clickBack.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.clickForward=_this5.clickForward.bind(Object(assertThisInitialized["a" /* default */])(_this5));_this5.AddSummary=_this5.AddSummary.bind(Object(assertThisInitialized["a" /* default */])(_this5));return _this5;}Object(createClass["a" /* default */])(Categories,[{key:"componentDidMount",value:function componentDidMount(){var _this6=this;chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){if(message.type=="note"){_this6.setState({elements:message.store});_this6.AddElToCategory(message.content);}});}},{key:"AddSummary",value:function AddSummary(data){var contains=this.state.contains;var category=this.state.category;contains[category]["summary"]=data;this.setState({contains:contains});}},{key:"AddTextNote",value:function AddTextNote(data){var element={data:data,id:getRandomInt(0,1000000000),link:'',type:'note'};var contains=this.state.contains;var category=this.state.category;contains[category]["elements"].push(element);this.setState({contains:contains});}},{key:"DefineNewCategory",value:function DefineNewCategory(category){var contains=this.state.contains;contains[category]={elements:[],categories:[],summary:'',img:null};this.setState({contains:contains});console.log(contains);}},{key:"SetNull",value:function SetNull(){this.setState({category:null});}},{key:"AddElToCategory",value:function AddElToCategory(element){var contains=this.state.contains;var category=this.state.category;contains[category]["elements"].push(element);this.setState({contains:contains});console.log(contains);}},{key:"AddCategoryToCategory",value:function AddCategoryToCategory(source){var contains=this.state.contains;contains[this.state.category]["categories"].push(source);if(!contains.hasOwnProperty(source)){this.DefineNewCategory(source);}this.setState({contains:contains});console.log(contains);}},{key:"CategoryHandler",value:function CategoryHandler(selection){console.log(selection);var history=this.state.history;history.push(this.state.category);this.setState({category:selection,history:history,historycounter:0});}},{key:"ElementHandler",value:function ElementHandler(selection){this.setState({});}},{key:"clickBack",value:function clickBack(){var previous;var historycounter=this.state.historycounter+1;if(this.state.history.length-historycounter<1){previous=this.state.history[0];}else{previous=this.state.history[this.state.history.length-historycounter];}this.setState({category:previous,historycounter:historycounter});}},{key:"clickForward",value:function clickForward(){var historycounter=this.state.historycounter-1;var next;if(historycounter<1){next=this.state.history[this.state.history.length];}else{next=this.state.history[this.state.history.length-historycounter];}this.setState({category:next,historycounter:historycounter});}},{key:"render",value:function render(){var _this7=this;var contains=this.state.contains;var category=this.state.category;var title;var notelist;var imagelist;var categorieslist;notelist=[];imagelist=[];/* console.log("notelist here")
+  }) */var App_Categories=/*#__PURE__*/function(_React$Component7){Object(inherits["a" /* default */])(Categories,_React$Component7);var _super7=Object(createSuper["a" /* default */])(Categories);function Categories(props){var _this8;Object(classCallCheck["a" /* default */])(this,Categories);_this8=_super7.call(this,props);_this8.state={category:null,contains:{},history:[],historyindex:0};_this8.DefineNewCategory=_this8.DefineNewCategory.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.AddElToCategory=_this8.AddElToCategory.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.AddCategoryToCategory=_this8.AddCategoryToCategory.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.CategoryHandler=_this8.CategoryHandler.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.SetNull=_this8.SetNull.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.clickBack=_this8.clickBack.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.clickForward=_this8.clickForward.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.AddSummary=_this8.AddSummary.bind(Object(assertThisInitialized["a" /* default */])(_this8));_this8.GetStorageData=_this8.GetStorageData.bind(Object(assertThisInitialized["a" /* default */])(_this8));return _this8;}Object(createClass["a" /* default */])(Categories,[{key:"componentDidMount",value:function componentDidMount(){var _this9=this;chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){if(message.type=="note"){_this9.setState({elements:message.store});_this9.AddElToCategory(message.content);}});}},{key:"AddSummary",value:function AddSummary(data){var contains=this.state.contains;var category=this.state.category;contains[category]["summary"]=data;this.setState({contains:contains});}},{key:"AddTextNote",value:function AddTextNote(data){var element={data:data,id:getRandomInt(0,1000000000),link:'',type:'note'};var contains=this.state.contains;var category=this.state.category;contains[category]["elements"].push(element);this.setState({contains:contains});}},{key:"DefineNewCategory",value:function DefineNewCategory(category){var contains=this.state.contains;contains[category]={elements:[],categories:[],summary:'',img:null};this.setState({contains:contains});console.log(contains);}},{key:"SetNull",value:function SetNull(){this.setState({category:null});}},{key:"AddElToCategory",value:function AddElToCategory(element){var contains=this.state.contains;var category=this.state.category;contains[category]["elements"].push(element);this.setState({contains:contains});console.log(contains);}},{key:"AddCategoryToCategory",value:function AddCategoryToCategory(source){var contains=this.state.contains;contains[this.state.category]["categories"].push(source);if(!contains.hasOwnProperty(source)){this.DefineNewCategory(source);}this.setState({contains:contains});console.log(contains);}},{key:"CategoryHandler",value:function CategoryHandler(selection){console.log(selection);var history=this.state.history;history.push(this.state.category);this.setState({category:selection,history:history,historycounter:0});}},{key:"ElementHandler",value:function ElementHandler(selection){this.setState({});}},{key:"GetStorageData",value:function GetStorageData(categories){console.log("fired get");this.setState({contains:categories});console.log(this.state.contains);}},{key:"clickBack",value:function clickBack(){var previous;var historycounter=this.state.historycounter+1;if(this.state.history.length-historycounter<1){previous=this.state.history[0];}else{previous=this.state.history[this.state.history.length-historycounter];}this.setState({category:previous,historycounter:historycounter});}},{key:"clickForward",value:function clickForward(){var historycounter=this.state.historycounter-1;var next;if(historycounter<1){next=this.state.history[this.state.history.length];}else{next=this.state.history[this.state.history.length-historycounter];}this.setState({category:next,historycounter:historycounter});}},{key:"render",value:function render(){var _this10=this;var contains=this.state.contains;var category=this.state.category;var title;var notelist;var imagelist;var categorieslist;notelist=[];imagelist=[];/* console.log("notelist here")
     console.log(notelist)
     console.log("imagelist here")
-    console.log(imagelist) */if(category!=null){categorieslist=contains[category].categories.map(function(item){return/*#__PURE__*/react_default.a.createElement("div",{"class":"category"},/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement(App_Category,{category:item,handler:_this7.CategoryHandler,data:contains[item]})));});title=category;notelist=this.state.contains[category]["elements"].filter(function(element){return element.type=="note";});imagelist=this.state.contains[category]["elements"].filter(function(element){return element.type=="image";});console.log("catlist here");console.log(categorieslist);}else if(Object.keys(contains).length>0){categorieslist=Object.keys(contains).map(function(item){return/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement(App_Category,{category:item,handler:_this7.CategoryHandler,data:contains[item]}));});title="No category selected";console.log(imagelist);//notelist=[]
+    console.log(imagelist) */if(category!=null){categorieslist=contains[category].categories.map(function(item){return/*#__PURE__*/react_default.a.createElement("div",{"class":"category"},/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement(App_Category,{category:item,handler:_this10.CategoryHandler,data:contains[item]})));});title=category;notelist=this.state.contains[category]["elements"].filter(function(element){return element.type=="note";});imagelist=this.state.contains[category]["elements"].filter(function(element){return element.type=="image";});console.log("catlist here");console.log(categorieslist);}else if(Object.keys(contains).length>0){categorieslist=Object.keys(contains).map(function(item){return/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement(App_Category,{category:item,handler:_this10.CategoryHandler,data:contains[item]}));});title="No category selected";console.log(imagelist);//notelist=[]
 //imagelist=[]
 }else{categorieslist=/*#__PURE__*/react_default.a.createElement("span",null,"No categories defined");title="No category selected";console.log(imagelist);//notelist=[]
 //imagelist=[]
 }//var notelist=this.state.contains[category]["elements"].filter(element => element.type == "note");
 /* const elementlist=category.elements.map((item)=>
       <Element element={item} handler={this.ElementHandler}/>
-    ) */return/*#__PURE__*/react_default.a.createElement("div",{"class":"categories",id:"categories"},/*#__PURE__*/react_default.a.createElement("img",{src:back,onClick:function onClick(){return _this7.clickBack();}}),/*#__PURE__*/react_default.a.createElement("img",{src:forward,onClick:function onClick(){return _this7.clickForward();}}),/*#__PURE__*/react_default.a.createElement("button",{onClick:this.SetNull},"Global view"),/*#__PURE__*/react_default.a.createElement("div",null,/*#__PURE__*/react_default.a.createElement("span",null,"Viewing category: "),/*#__PURE__*/react_default.a.createElement("div",{id:"title"},/*#__PURE__*/react_default.a.createElement("b",null,title))),/*#__PURE__*/react_default.a.createElement(App_NameForm,{submit:this.DefineNewCategory,title:"Define New Category"}),/*#__PURE__*/react_default.a.createElement(App_NameForm,{submit:this.AddCategoryToCategory,title:"Add Category to "+this.state.category}),/*#__PURE__*/react_default.a.createElement(App_TextArea,{submit:this.AddSummary,label:"Add summary"}),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Subcategories")),/*#__PURE__*/react_default.a.createElement("div",{"class":"categorieslist"},/*#__PURE__*/react_default.a.createElement("ul",null,categorieslist)),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Text notes")),/*#__PURE__*/react_default.a.createElement(App_NoteList,{notelist:notelist,handler:this.CategoryHandler}),/*#__PURE__*/react_default.a.createElement(App_TextArea,{submit:this.AddElToCategory,label:"Add element"}),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Screenshots")),/*#__PURE__*/react_default.a.createElement(App_ImageList,{imagelist:imagelist}));}}]);return Categories;}(react_default.a.Component);/* class Element extends React.Component{
+    ) */return/*#__PURE__*/react_default.a.createElement("div",{"class":"categories",id:"categories"},/*#__PURE__*/react_default.a.createElement("img",{src:back,onClick:function onClick(){return _this10.clickBack();}}),/*#__PURE__*/react_default.a.createElement("img",{src:forward,onClick:function onClick(){return _this10.clickForward();}}),/*#__PURE__*/react_default.a.createElement("button",{onClick:this.SetNull},"Global view"),/*#__PURE__*/react_default.a.createElement("div",null,/*#__PURE__*/react_default.a.createElement("span",null,"Viewing category: "),/*#__PURE__*/react_default.a.createElement("div",{id:"title"},/*#__PURE__*/react_default.a.createElement("b",null,title))),/*#__PURE__*/react_default.a.createElement(App_NameForm,{submit:this.DefineNewCategory,title:"Define New Category"}),/*#__PURE__*/react_default.a.createElement(App_NameForm,{submit:this.AddCategoryToCategory,title:"Add Category to "+this.state.category}),/*#__PURE__*/react_default.a.createElement(App_TextArea,{submit:this.AddSummary,label:"Add summary"}),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Subcategories")),/*#__PURE__*/react_default.a.createElement("div",{"class":"categorieslist"},/*#__PURE__*/react_default.a.createElement("ul",null,categorieslist)),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Text notes")),/*#__PURE__*/react_default.a.createElement(App_NoteList,{notelist:notelist,handler:this.CategoryHandler}),/*#__PURE__*/react_default.a.createElement(App_TextArea,{submit:this.AddElToCategory,label:"Add element"}),/*#__PURE__*/react_default.a.createElement("div",{id:"subtitle"},/*#__PURE__*/react_default.a.createElement("b",null,"Screenshots")),/*#__PURE__*/react_default.a.createElement(App_ImageList,{imagelist:imagelist}),/*#__PURE__*/react_default.a.createElement(App_SetStorage,{categories:this.state.contains}),/*#__PURE__*/react_default.a.createElement(App_GetStorage,{GetStorage:this.GetStorageData}));}}]);return Categories;}(react_default.a.Component);/* class Element extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -33855,7 +33851,7 @@ function NoteReduce(state = initialState, action) {
 
     )
   }
-} */var App_Category=/*#__PURE__*/function(_React$Component6){Object(inherits["a" /* default */])(Category,_React$Component6);var _super6=Object(createSuper["a" /* default */])(Category);function Category(props){var _this8;Object(classCallCheck["a" /* default */])(this,Category);_this8=_super6.call(this,props);_this8.state={categories:[],elements:[]};_this8.handleClick=_this8.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this8));return _this8;}Object(createClass["a" /* default */])(Category,[{key:"handleClick",value:function handleClick(e){e.preventDefault();this.props.handler(this.props.category);}},{key:"handleMouseOver",value:function handleMouseOver(e){e.preventDefault();chrome.runtime.sendMessage({message:'popup-modal'});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",null,/*#__PURE__*/react_default.a.createElement("span",{onClick:this.handleClick,onMouseOver:this.handleMouseOver},this.props.category),this.props.data.summary);}}]);return Category;}(react_default.a.Component);var App_Bibliography=/*#__PURE__*/function(_React$Component7){Object(inherits["a" /* default */])(Bibliography,_React$Component7);var _super7=Object(createSuper["a" /* default */])(Bibliography);function Bibliography(props){var _this9;Object(classCallCheck["a" /* default */])(this,Bibliography);_this9=_super7.call(this,props);_this9.state={html:[],listhtml:''};return _this9;}Object(createClass["a" /* default */])(Bibliography,[{key:"componentDidMount",value:function componentDidMount(){var _this10=this;chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){_this10.setState({html:bibliography});var biblist=_this10.state.html.join();biblist="<ul>"+biblist+"</ul>";_this10.setState({listhtml:biblist});});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",{dangerouslySetInnerHTML:{__html:this.state.listhtml}});}}]);return Bibliography;}(react_default.a.Component);var App_ImageList=/*#__PURE__*/function(_React$Component8){Object(inherits["a" /* default */])(ImageList,_React$Component8);var _super8=Object(createSuper["a" /* default */])(ImageList);function ImageList(props){var _this11;Object(classCallCheck["a" /* default */])(this,ImageList);_this11=_super8.call(this,props);_this11.state={value:[]};return _this11;}Object(createClass["a" /* default */])(ImageList,[{key:"render",value:function render(){console.log("imagelist");console.log(this.props.imagelist);return this.props.imagelist.map(function(item){return/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement("img",{src:item.imgcode,width:item.width,height:item.height}));});}}]);return ImageList;}(react_default.a.Component);var App_App=/*#__PURE__*/function(_Component){Object(inherits["a" /* default */])(App,_Component);var _super9=Object(createSuper["a" /* default */])(App);function App(){Object(classCallCheck["a" /* default */])(this,App);return _super9.apply(this,arguments);}Object(createClass["a" /* default */])(App,[{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",{className:"App"},/*#__PURE__*/react_default.a.createElement("p",{className:"App-intro"},"To get started, edit ",/*#__PURE__*/react_default.a.createElement("code",null,"src/App.js")," and save to reload."),/*#__PURE__*/react_default.a.createElement(App_ScreenshotButton,null),/*#__PURE__*/react_default.a.createElement(App_Categories,null),/*#__PURE__*/react_default.a.createElement("ul",null,/*#__PURE__*/react_default.a.createElement(App_Bibliography,null)));}}]);return App;}(react["Component"]);/* harmony default export */ var src_App_0 = __webpack_exports__["b"] = (App_App);
+} */var App_Category=/*#__PURE__*/function(_React$Component8){Object(inherits["a" /* default */])(Category,_React$Component8);var _super8=Object(createSuper["a" /* default */])(Category);function Category(props){var _this11;Object(classCallCheck["a" /* default */])(this,Category);_this11=_super8.call(this,props);_this11.state={categories:[],elements:[]};_this11.handleClick=_this11.handleClick.bind(Object(assertThisInitialized["a" /* default */])(_this11));return _this11;}Object(createClass["a" /* default */])(Category,[{key:"handleClick",value:function handleClick(e){e.preventDefault();this.props.handler(this.props.category);}},{key:"handleMouseOver",value:function handleMouseOver(e){e.preventDefault();chrome.runtime.sendMessage({message:'popup-modal'});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",null,/*#__PURE__*/react_default.a.createElement("span",{onClick:this.handleClick,onMouseOver:this.handleMouseOver},this.props.category),this.props.data.summary);}}]);return Category;}(react_default.a.Component);var App_Bibliography=/*#__PURE__*/function(_React$Component9){Object(inherits["a" /* default */])(Bibliography,_React$Component9);var _super9=Object(createSuper["a" /* default */])(Bibliography);function Bibliography(props){var _this12;Object(classCallCheck["a" /* default */])(this,Bibliography);_this12=_super9.call(this,props);_this12.state={html:[],listhtml:''};return _this12;}Object(createClass["a" /* default */])(Bibliography,[{key:"componentDidMount",value:function componentDidMount(){var _this13=this;chrome.runtime.onMessage.addListener(function(message,sender,sendResponse){_this13.setState({html:bibliography});var biblist=_this13.state.html.join();biblist="<ul>"+biblist+"</ul>";_this13.setState({listhtml:biblist});});}},{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",{dangerouslySetInnerHTML:{__html:this.state.listhtml}});}}]);return Bibliography;}(react_default.a.Component);var App_ImageList=/*#__PURE__*/function(_React$Component10){Object(inherits["a" /* default */])(ImageList,_React$Component10);var _super10=Object(createSuper["a" /* default */])(ImageList);function ImageList(props){var _this14;Object(classCallCheck["a" /* default */])(this,ImageList);_this14=_super10.call(this,props);_this14.state={value:[]};return _this14;}Object(createClass["a" /* default */])(ImageList,[{key:"render",value:function render(){console.log("imagelist");console.log(this.props.imagelist);return this.props.imagelist.map(function(item){return/*#__PURE__*/react_default.a.createElement("li",null,/*#__PURE__*/react_default.a.createElement("img",{src:item.imgcode,width:item.width,height:item.height}));});}}]);return ImageList;}(react_default.a.Component);var App_App=/*#__PURE__*/function(_Component){Object(inherits["a" /* default */])(App,_Component);var _super11=Object(createSuper["a" /* default */])(App);function App(){Object(classCallCheck["a" /* default */])(this,App);return _super11.apply(this,arguments);}Object(createClass["a" /* default */])(App,[{key:"render",value:function render(){return/*#__PURE__*/react_default.a.createElement("div",{className:"App"},/*#__PURE__*/react_default.a.createElement("p",{className:"App-intro"},"To get started, edit ",/*#__PURE__*/react_default.a.createElement("code",null,"src/App.js")," and save to reload."),/*#__PURE__*/react_default.a.createElement(App_ScreenshotButton,null),/*#__PURE__*/react_default.a.createElement(App_Categories,null),/*#__PURE__*/react_default.a.createElement("ul",null,/*#__PURE__*/react_default.a.createElement(App_Bibliography,null)));}}]);return App;}(react["Component"]);/* harmony default export */ var src_App_0 = __webpack_exports__["b"] = (App_App);
 
 /***/ }),
 /* 64 */
@@ -34495,7 +34491,7 @@ __webpack_require__(57)
 
 var citeproc = __webpack_require__(11)
 var name = __webpack_require__(4)
-var date = __webpack_require__(2)
+var date = __webpack_require__(3)
 
 function clone (obj) {
   const copy = {}
@@ -35923,7 +35919,7 @@ exports.default = _default;
 /* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { isPlainObject } = __webpack_require__(6)
+const { isPlainObject } = __webpack_require__(10)
 
 const simplify = __webpack_require__(38)
 const parse = __webpack_require__(88)
@@ -36706,7 +36702,7 @@ var objectKeys = Object.keys || function (obj) {
 /* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { isPlainObject } = __webpack_require__(6)
+const { isPlainObject } = __webpack_require__(10)
 const types = [ 'item', 'property', 'lexeme', 'form', 'sense' ]
 
 module.exports = buildUrl => (search, language, limit, format, uselang) => {
@@ -36754,7 +36750,7 @@ module.exports = buildUrl => (search, language, limit, format, uselang) => {
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { isPlainObject } = __webpack_require__(6)
+const { isPlainObject } = __webpack_require__(10)
 
 module.exports = buildUrl => {
   const getEntities = __webpack_require__(41)(buildUrl)
@@ -36786,7 +36782,7 @@ const getIdsGroups = ids => {
 /* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { forceArray } = __webpack_require__(6)
+const { forceArray } = __webpack_require__(10)
 const validate = __webpack_require__(19)
 
 module.exports = buildUrl => (ids, options = {}) => {
@@ -36830,7 +36826,7 @@ const earliestPointInMs = new Date('2000-01-01').getTime()
 /***/ (function(module, exports, __webpack_require__) {
 
 const validate = __webpack_require__(19)
-const { isPlainObject } = __webpack_require__(6)
+const { isPlainObject } = __webpack_require__(10)
 
 module.exports = instance => (id, revision) => {
   if (isPlainObject(id)) {
@@ -36847,7 +36843,7 @@ module.exports = instance => (id, revision) => {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { isPlainObject, forceArray, shortLang } = __webpack_require__(6)
+const { isPlainObject, forceArray, shortLang } = __webpack_require__(10)
 
 module.exports = buildUrl => (titles, sites, languages, props, format, redirects) => {
   // polymorphism: arguments can be passed as an object keys
@@ -36908,7 +36904,7 @@ const parseSite = site => site.length === 2 ? `${site}wiki` : site
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { forceArray } = __webpack_require__(6)
+const { forceArray } = __webpack_require__(10)
 const { isItemId } = __webpack_require__(12)
 const validate = __webpack_require__(19)
 
@@ -54235,7 +54231,7 @@ function parse(text) {
 var lib = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/date/lib/index.js
-var date_lib = __webpack_require__(2);
+var date_lib = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/@citation-js/plugin-bibtex/lib-mjs/input/prop.js
 
@@ -55071,7 +55067,7 @@ var types = __webpack_require__(17);
 var spec_new = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./node_modules/@citation-js/date/lib/index.js
-var lib = __webpack_require__(2);
+var lib = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/@citation-js/plugin-ris/lib-mjs/converters.js
 
@@ -56725,10 +56721,10 @@ module.exports = __webpack_require__(151);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
-/* harmony import */ var C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8);
-/* harmony import */ var C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
-/* harmony import */ var C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9);
+/* harmony import */ var C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
+/* harmony import */ var C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(26);
@@ -56736,7 +56732,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_frame_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(146);
 /* harmony import */ var react_frame_component__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_frame_component__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(63);
-/*global chrome*/ /* src/content.js */var Main=/*#__PURE__*/function(_React$Component){Object(C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(Main,_React$Component);var _super=Object(C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(Main);function Main(){Object(C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(this,Main);return _super.apply(this,arguments);}Object(C_Users_stefa_react_chrome_extension_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])(Main,[{key:"render",value:function render(){return/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react_frame_component__WEBPACK_IMPORTED_MODULE_6___default.a,{head:[/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("link",{type:"text/css",rel:"stylesheet",href:chrome.runtime.getURL("/static/css/content.css")})]},/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react_frame_component__WEBPACK_IMPORTED_MODULE_6__["FrameContextConsumer"],null,function(_ref){var document=_ref.document,window=_ref.window;return/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"],{document:document,window:window,isExt:true});}));}}]);return Main;}(react__WEBPACK_IMPORTED_MODULE_4___default.a.Component);var app=document.createElement('div');app.id="my-extension-root";document.body.appendChild(app);react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(Main,null),app);app.style.display="none";chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){if(request.message==="clicked_browser_action"){toggle();}});chrome.runtime.onMessage.addListener(function(request){if(request.type==='popup-modal'){showModal();}});function showModal(){document.body.innerHTML+='<dialog>This is a dialog.<br><button>Close</button></dialog>';var dialog=document.querySelector("dialog");dialog.querySelector("button").addEventListener("click",function(){dialog.close();});dialog.showModal();}function toggle(){if(app.style.display==="none"){app.style.display="block";}else{app.style.display="none";}}
+/*global chrome*/ /* src/content.js */var Main=/*#__PURE__*/function(_React$Component){Object(C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(Main,_React$Component);var _super=Object(C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(Main);function Main(){Object(C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(this,Main);return _super.apply(this,arguments);}Object(C_Users_stefa_Lycia_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])(Main,[{key:"render",value:function render(){return/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react_frame_component__WEBPACK_IMPORTED_MODULE_6___default.a,{head:[/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("link",{type:"text/css",rel:"stylesheet",href:chrome.runtime.getURL("/static/css/content.css")})]},/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react_frame_component__WEBPACK_IMPORTED_MODULE_6__["FrameContextConsumer"],null,function(_ref){var document=_ref.document,window=_ref.window;return/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"],{document:document,window:window,isExt:true});}));}}]);return Main;}(react__WEBPACK_IMPORTED_MODULE_4___default.a.Component);var app=document.createElement('div');app.id="my-extension-root";document.body.appendChild(app);react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(Main,null),app);app.style.display="none";chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){if(request.message==="clicked_browser_action"){toggle();}});chrome.runtime.onMessage.addListener(function(request){if(request.type==='popup-modal'){showModal();}});function showModal(){document.body.innerHTML+='<dialog>This is a dialog.<br><button>Close</button></dialog>';var dialog=document.querySelector("dialog");dialog.querySelector("button").addEventListener("click",function(){dialog.close();});dialog.showModal();}function toggle(){if(app.style.display==="none"){app.style.display="block";}else{app.style.display="none";}}
 
 /***/ }),
 /* 152 */
