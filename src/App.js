@@ -29,6 +29,20 @@ function getRandomInt(min, max) {
 }
 
 
+async function getLocalStorageValue(key) {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.get(key, function (value) {
+        resolve(value);
+      })
+    }
+    catch (ex) {
+      reject(ex);
+    }
+  });
+}
+
+
 class ScreenshotButton extends React.Component {
   constructor(props) {
     super(props);
@@ -46,58 +60,6 @@ class ScreenshotButton extends React.Component {
   render() {
     return (
       <button onClick={this.handleClick}> Take a screenshot</button>
-    )
-  }
-}
-
-class SetStorage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: []
-    };
-
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick() {
-    chrome.storage.sync.set({ alldata: this.props.categories })
-    console.log(chrome.storage.sync.get(['alldata'],function(result){
-      console.log(result)
-    }))
-  }
-
-  render() {
-    return (
-      <button onClick={this.handleClick}> Store Data </button>
-    )
-  }
-}
-
-class GetStorage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      result: null
-    };
-    this.getStore=this.getStore.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  getStore(result){
-    this.props.GetStorage(result)
-  }
-
-  handleClick() {
-    chrome.storage.sync.get('alldata', (result)=>
-      this.getStore(result.alldata)
-      //console.log(result)
-    )
-  }
-
-  render() {
-    return (
-      <button onClick={this.handleClick}> Get Data </button>
     )
   }
 }
@@ -152,6 +114,12 @@ class TextArea extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    /* var element={
+      data:this.state.value,
+      id: getRandomInt(0, 1000000000),
+      link:'',
+      type:'note'
+    } */
     this.props.submit(this.state.value)
   }
 
@@ -255,7 +223,7 @@ class NoteList extends React.Component {
 
 
       this.props.notelist.map((item) =>
-        <Note text={item.data} link={item.link} id={item.id} handler={this.props.handler} />
+        <li><Note text={item.data} link={item.link} id={item.id} handler={this.props.handler} /></li>
 
 
         /* this.state.value.map((item) =>
@@ -337,12 +305,65 @@ function NoteReduce(state = initialState, action) {
   }) */
 
 
+class SetStorage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: []
+    };
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    chrome.storage.local.set({ alldata: this.props.categories })
+    console.log(chrome.storage.local.get(['alldata'], function (result) {
+      console.log(result)
+    }))
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}> Store Data </button>
+    )
+  }
+}
+
+class GetStorage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      result: null
+    };
+    this.getStore = this.getStore.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  getStore(result) {
+    this.props.GetStorage(result)
+  }
+
+  handleClick() {
+    chrome.storage.local.get('alldata', (result) =>
+      this.getStore(result.alldata)
+      //console.log(result)
+    )
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}> Get Data </button>
+    )
+  }
+}
+
+
 class Categories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: null,
-      contains: {},
+      category: 'Global',
+      contains: { 'Global': { elements: [], categories: [], summary: '', img: null } },
       history: [],
       historyindex: 0
     };
@@ -355,13 +376,16 @@ class Categories extends React.Component {
     this.clickBack = this.clickBack.bind(this)
     this.clickForward = this.clickForward.bind(this)
     this.AddSummary = this.AddSummary.bind(this)
-    this.GetStorageData=this.GetStorageData.bind(this)
+    this.AddTextNote = this.AddTextNote.bind(this)
+    this.GetStorageData = this.GetStorageData.bind(this)
+    this.ClearData=this.ClearData.bind(this)
   }
 
 
 
   componentDidMount() {
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      console.log(message)
       if (message.type == "note") {
         this.setState({
           elements: message.store
@@ -370,194 +394,253 @@ class Categories extends React.Component {
       }
     }
     )
-  }
-
-
-  AddSummary(data) {
-    var contains = this.state.contains
-    var category = this.state.category
-    contains[category]["summary"] = data
-    this.setState({ contains: contains })
-  }
-
-
-  AddTextNote(data) {
-    var element = {
-      data: data,
-      id: getRandomInt(0, 1000000000),
-      link: '',
-      type: 'note'
-    }
-    var contains = this.state.contains
-    var category = this.state.category
-    contains[category]["elements"].push(element)
-    this.setState({ contains: contains })
-  }
-
-  DefineNewCategory(category) {
-    var contains = this.state.contains
-    contains[category] = { elements: [], categories: [], summary: '', img: null }
-    this.setState({ contains: contains })
-    console.log(contains)
-  }
-
-  SetNull() {
-    this.setState({ category: null })
-  }
-
-
-  AddElToCategory(element) {
-    var contains = this.state.contains
-    var category = this.state.category
-    contains[category]["elements"].push(element)
-    this.setState({ contains: contains })
-    console.log(contains)
-  }
-
-  AddCategoryToCategory(source) {
-    var contains = this.state.contains
-    contains[this.state.category]["categories"].push(source)
-    if (!contains.hasOwnProperty(source)) {
-      this.DefineNewCategory(source)
-    }
-    this.setState({ contains: contains })
-    console.log(contains)
-  }
-
-  CategoryHandler(selection) {
-    console.log(selection)
-    var history = this.state.history
-    history.push(this.state.category)
-    this.setState({
-      category: selection,
-      history: history,
-      historycounter: 0
+    let currentComponent=this
+    var currdata
+    getLocalStorageValue(['currdata']).then(function(result){
+      currdata=result.currdata
+      currentComponent.setState({contains:currdata})
+      console.log("logging state in fetch")
+      console.log(currentComponent.state)
     })
-  }
-
-  ElementHandler(selection) {
-    this.setState({
-
-    })
-  }
-
-  GetStorageData(categories){
-    console.log("fired get")
-    this.setState({contains:categories})
-    console.log(this.state.contains)
-  }
-
-  clickBack() {
-    var previous
-    var historycounter = this.state.historycounter + 1
-    if ((this.state.history.length - historycounter) < 1) {
-      previous = this.state.history[0]
+    
+    /* chrome.storage.local.get(['currdata'], function (result) {
+      console.log("result")
+      console.log(result)
+      currdata = result.currdata
+      console.log("currdata")
+      console.log(currdata)
+      this.setState({
+        contains: currdata,
+        category: "Global"
+      })
+      console.log("checking state")
+      console.log(this.state)
     }
-    else {
-      previous = this.state.history[this.state.history.length - historycounter]
-    }
-
-
-    this.setState({
-      category: previous,
-      historycounter: historycounter,
-    })
-  }
-
-  clickForward() {
-    var historycounter = this.state.historycounter - 1
-    var next
-    if (historycounter < 1) {
-      next = this.state.history[this.state.history.length]
-    }
-
-    else {
-      next = this.state.history[this.state.history.length - historycounter]
-    }
-    this.setState({
-      category: next,
-      historycounter: historycounter,
-    })
-  }
-
-  render() {
-    var contains = this.state.contains
-    var category = this.state.category
-
-    let title;
-    let notelist;
-    let imagelist;
-    let categorieslist;
-
-    notelist = []
-    imagelist = []
-    /* console.log("notelist here")
-    console.log(notelist)
-    console.log("imagelist here")
-    console.log(imagelist) */
-    if (category != null) {
-      categorieslist = contains[category].categories.map((item) =>
-        <div class="category">
-          <li>
-            <Category category={item} handler={this.CategoryHandler} data={contains[item]} />
-          </li>
-        </div>
-      )
-      title = category
-      notelist = this.state.contains[category]["elements"].filter(element => element.type == "note");
-      imagelist = this.state.contains[category]["elements"].filter(element => element.type == "image");
-      console.log("catlist here")
-      console.log(categorieslist)
-    }
-    else if (Object.keys(contains).length > 0) {
-      categorieslist = Object.keys(contains).map((item) =>
-        <li><Category category={item} handler={this.CategoryHandler} data={contains[item]} /></li>
-      )
-      title = "No category selected"
-      console.log(imagelist)
-      //notelist=[]
-      //imagelist=[]
-    }
-    else {
-      categorieslist = <span>No categories defined</span>
-      title = "No category selected"
-      console.log(imagelist)
-      //notelist=[]
-      //imagelist=[]
-    }
-
-
-
-    //var notelist=this.state.contains[category]["elements"].filter(element => element.type == "note");
-
-
-    /* const elementlist=category.elements.map((item)=>
-      <Element element={item} handler={this.ElementHandler}/>
     ) */
-    return (
-      <div class="categories" id="categories">
-        <img src={backbutton} onClick={() => this.clickBack()} />
-        <img src={forwardbutton} onClick={() => this.clickForward()} />
-        <button onClick={this.SetNull}>Global view</button>
-        <div>
-          <span>Viewing category: </span>
-          <div id="title"><b>{title}</b></div>
-        </div>
-        <NameForm submit={this.DefineNewCategory} title="Define New Category" />
-        <NameForm submit={this.AddCategoryToCategory} title={"Add Category to " + this.state.category} />
-        <TextArea submit={this.AddSummary} label="Add summary" />
-        <div id="subtitle"><b>Subcategories</b></div>
-        <div class="categorieslist"><ul>{categorieslist}</ul></div>
-        <div id="subtitle"><b>Text notes</b></div>
-        <NoteList notelist={notelist} handler={this.CategoryHandler} />
-        <TextArea submit={this.AddElToCategory} label="Add element" />
-        <div id="subtitle"><b>Screenshots</b></div>
-        <ImageList imagelist={imagelist} />
-        <SetStorage categories={this.state.contains}/>
-        <GetStorage GetStorage={this.GetStorageData}/>
+
+    
+    //this.setState({contains:currdata})
+    console.log("hi")
+    console.log(this.state)
+    console.log(currdata)
+
+    console.log("after reload")
+    console.log(this.state)
+  }
+
+
+  
+
+//const result = await getLocalStorageValue("my-key");
+
+
+GetStorageData(categories) {
+  console.log("fired get")
+  this.setState({ contains: categories })
+  console.log(this.state.contains)
+}
+
+ClearData() {
+  this.setState( {
+    category: 'Global',
+    contains: { 'Global': { elements: [], categories: [], summary: '', img: null } },
+    history: [],
+    historyindex: 0
+  })
+  chrome.storage.local.set({ currdata: this.state.contains })
+}
+
+AddSummary(data) {
+  var contains = this.state.contains
+  var category = this.state.category
+  contains[category]["summary"] = data
+  this.setState({ contains: contains })
+  chrome.storage.local.set({ currdata: this.state.contains })
+}
+
+
+AddTextNote(data) {
+  var element = {
+    data: data,
+    id: getRandomInt(0, 1000000000),
+    link: '',
+    type: 'note'
+  }
+  var contains = this.state.contains
+  var category = this.state.category
+  contains[category]["elements"].push(element)
+  this.setState({ contains: contains })
+  chrome.storage.local.set({ currdata: this.state.contains })
+}
+
+DefineNewCategory(category) {
+  var contains = this.state.contains
+  contains[category] = { elements: [], categories: [], summary: '', img: null }
+  this.setState({ contains: contains })
+  chrome.storage.local.set({ currdata: this.state.contains })
+  console.log(contains)
+}
+
+SetNull() {
+  this.setState({ category: 'Global' })
+}
+
+
+AddElToCategory(element) {
+  var contains = this.state.contains
+  var category = this.state.category
+  contains[category]["elements"].push(element)
+  this.setState({ contains: contains })
+  chrome.storage.local.set({ currdata: this.state.contains })
+  console.log(contains)
+}
+
+AddCategoryToCategory(source) {
+  var contains = this.state.contains
+  contains[this.state.category]["categories"].push(source)
+  if (!contains.hasOwnProperty(source)) {
+    this.DefineNewCategory(source)
+  }
+  this.setState({ contains: contains })
+  chrome.storage.local.set({ currdata: this.state.contains })
+  console.log(contains)
+}
+
+CategoryHandler(selection) {
+  console.log(selection)
+  var history = this.state.history
+  history.push(this.state.category)
+  this.setState({
+    category: selection,
+    history: history,
+    historycounter: 0
+  })
+}
+
+ElementHandler(selection) {
+  this.setState({
+
+  })
+}
+
+clickBack() {
+  var previous
+  var historycounter = this.state.historycounter + 1
+  if ((this.state.history.length - historycounter) < 1) {
+    previous = this.state.history[0]
+  }
+  else {
+    previous = this.state.history[this.state.history.length - historycounter]
+  }
+
+
+  this.setState({
+    category: previous,
+    historycounter: historycounter,
+  })
+}
+
+clickForward() {
+  var historycounter = this.state.historycounter - 1
+  var next
+  if (historycounter < 1) {
+    next = this.state.history[this.state.history.length]
+  }
+
+  else {
+    next = this.state.history[this.state.history.length - historycounter]
+  }
+  this.setState({
+    category: next,
+    historycounter: historycounter,
+  })
+}
+
+render() {
+  var contains = this.state.contains
+  var category = this.state.category
+  var summary = this.state.summary
+
+  console.log("in state")
+  console.log(this.state)
+  console.log("in render")
+  console.log(contains)
+  let title;
+  let notelist;
+  let imagelist;
+  let categorieslist;
+
+  notelist = []
+  imagelist = []
+  /* console.log("notelist here")
+  console.log(notelist)
+  console.log("imagelist here")
+  console.log(imagelist) */
+  if (category != null) {
+    categorieslist = contains[category].categories.map((item) =>
+      <div class="category">
+        <li>
+          <Category category={item} handler={this.CategoryHandler} data={contains[item]} />
+        </li>
       </div>
     )
+    title = category
+    notelist = this.state.contains[category]["elements"].filter(element => element.type == "note");
+    imagelist = this.state.contains[category]["elements"].filter(element => element.type == "image");
+    console.log("catlist here")
+    console.log(categorieslist)
   }
+  else if (Object.keys(contains).length > 0) {
+    categorieslist = Object.keys(contains).map((item) =>
+      <li><Category category={item} handler={this.CategoryHandler} data={contains[item]} /></li>
+    )
+    title = "No category selected"
+    console.log(imagelist)
+    //notelist=[]
+    //imagelist=[]
+  }
+  else {
+    categorieslist = <span>No categories defined</span>
+    title = "No category selected"
+    console.log(imagelist)
+    //notelist=[]
+    //imagelist=[]
+  }
+
+
+
+  //var notelist=this.state.contains[category]["elements"].filter(element => element.type == "note");
+
+
+  /* const elementlist=category.elements.map((item)=>
+    <Element element={item} handler={this.ElementHandler}/>
+  ) */
+  return (
+    <div class="categories" id="categories">
+      <img src={backbutton} onClick={() => this.clickBack()} />
+      <img src={forwardbutton} onClick={() => this.clickForward()} />
+      <button onClick={this.SetNull}>Global view</button>
+      <div>
+        <span>Viewing category: </span>
+        <div id="title"><b>{title}</b></div>
+        <span>Summary: </span>
+        <span></span>
+      </div>
+      <NameForm submit={this.AddCategoryToCategory} title={"Add Category to " + this.state.category} />
+      <TextArea submit={this.AddSummary} label="Add summary" />
+      <div id="subtitle"><b>Subcategories</b></div>
+      <div class="categorieslist"><ul>{categorieslist}</ul></div>
+      <div id="subtitle"><b>Text notes</b></div>
+      <ul><NoteList notelist={notelist} handler={this.CategoryHandler} /></ul>
+      <TextArea submit={this.AddTextNote} label="Add element" />
+      <div id="subtitle"><b>Screenshots</b></div>
+      <ImageList imagelist={imagelist} />
+      <SetStorage categories={this.state.contains} />
+      <GetStorage GetStorage={this.GetStorageData} />
+      <button onClick={this.ClearData}> Clear Data </button>
+    </div>
+  )
+}
 }
 
 /* class Element extends React.Component{
@@ -594,7 +677,7 @@ class Category extends React.Component {
     this.props.handler(this.props.category)
   }
 
-  handleMouseOver(e){
+  handleMouseOver(e) {
     e.preventDefault();
     chrome.runtime.sendMessage({ message: 'popup-modal' })
 
@@ -608,7 +691,7 @@ class Category extends React.Component {
           {this.props.category}
         </span>
 
-          {this.props.data.summary}
+        {this.props.data.summary}
       </div>
     )
   }

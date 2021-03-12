@@ -2,7 +2,7 @@
   "short_name": "My Extension",
   "name": "My Extension",
   "version": "1.1",
-  "permissions": ["activeTab","declarativeContent","storage","contextMenus","tabs","<all_urls>"],
+  "permissions": ["activeTab","declarativeContent","storage","contextMenus","tabs","<all_urls>","unlimitedStorage"],
   "manifest_version": 2,
   "background": {
     "page":"background.html"
